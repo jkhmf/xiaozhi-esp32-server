@@ -85,9 +85,9 @@ selected_module:
   # 语音活动检测模块，默认使用SileroVAD模型
   VAD: SileroVAD
   # 语音识别模块，默认使用FunASR本地模型
-  ASR: FunASR
+  ASR: DoubaoASR
   # 将根据配置名称对应的type调用实际的LLM适配器
-  LLM: ChatGLMLLM
+  LLM: OllamaLLM
   # TTS将根据配置名称对应的type调用实际的TTS适配器
   TTS: EdgeTTS
   # 记忆模块，默认不开启记忆；如果想使用超长记忆，推荐使用mem0ai；如果注重隐私，请使用本地的mem_local_short
@@ -111,7 +111,7 @@ Intent:
     # 配备意图识别独立的思考模型
     # 如果这里不填，则会默认使用selected_module.LLM的模型作为意图识别的思考模型
     # 如果你的selected_module.LLM选择了DifyLLM或CozeLLM，这里最好使用独立的LLM作为意图识别，例如使用免费的ChatGLMLLM
-    llm: ChatGLMLLM
+    llm: OllamaLLM
   function_call:
     # 不需要动type
     type: function_call
@@ -173,6 +173,7 @@ Memory:
     type: mem_local_short
 
 ASR:
+  #本地语音模型，默认使用FunASR
   FunASR:
     type: fun_local
     model_dir: models/SenseVoiceSmall
@@ -183,8 +184,8 @@ ASR:
     output_dir: tmp/
   DoubaoASR:
     type: doubao
-    appid: 你的火山引擎语音合成服务appid
-    access_token: 你的火山引擎语音合成服务access_token
+    appid: api-key-20250403120151
+    access_token: 556b50d6-3166-4924-aac8-2b2279f1dc29
     cluster: volcengine_input_common
     output_dir: tmp/
   TencentASR:
@@ -237,7 +238,7 @@ LLM:
     # 开通后，进入这里获取密钥：https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D
     base_url: https://ark.cn-beijing.volces.com/api/v3
     model_name: doubao-pro-32k-functioncall-241028
-    api_key: 你的doubao web key
+    api_key: 556b50d6-3166-4924-aac8-2b2279f1dc29
   DeepSeekLLM:
     # 定义LLM API类型
     type: openai
@@ -256,7 +257,7 @@ LLM:
   OllamaLLM:
     # 定义LLM API类型
     type: ollama
-    model_name: qwen2.5 #  使用的模型名称，需要预先使用ollama pull下载
+    model_name: qwen2.5 #qwen2.5 #  使用的模型名称，需要预先使用ollama pull下载
     base_url: http://localhost:11434  # Ollama服务地址
   DifyLLM:
     # 定义LLM API类型
